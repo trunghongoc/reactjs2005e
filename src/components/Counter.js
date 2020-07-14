@@ -16,7 +16,40 @@ class Counter extends React.Component {
     })
   }
 
+  componentWillMount() {
+    console.log('componentWillMount')
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log('componentWillReceiveProps:', {
+      newProps,
+      oldProps: this.props
+    })
+  }
+
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate')
+    return true
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate')
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate')
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount')
+  }
+
   render() {
+    console.log('render')
     return (
       <div>
         <button onClick={this.increment}>INCREMENT</button>
@@ -24,6 +57,10 @@ class Counter extends React.Component {
       </div>
     )
   }
+}
+
+Counter.defaultProps = {
+  number: 10
 }
 
 export default Counter

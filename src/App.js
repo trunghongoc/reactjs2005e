@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
 import Counter from './components/Counter'
+import Form from './components/Form'
+import ReactDOM from 'react-dom'
+import Student from './components/Student'
 
 class App extends Component {
   state = {
-    number: 1
+    number: 1,
+    show: true
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        number: 10
-      })
-    }, 6000)
+    
   }
 
   render() {
     return (
       <div>
         <h1>Lớp học reactjs</h1>
-        <Counter number={this.state.number}/>
-        <Counter
-          number={2}
-          name="Hoa"
-          hobby={"football"} />
-        <Counter number={3}/>
+        <Counter number={this.state.number} />
+
+        <Form ref="myForm" />
+        <Student />
       </div>
     )
   }
