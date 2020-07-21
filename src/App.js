@@ -9,6 +9,8 @@ import {
 import Sum from './pages/Sum'
 import Input from './pages/Input'
 import ToDo from './pages/ToDo'
+import MyState from './pages/MyState'
+import Hooks from './pages/Hooks'
 
 class App extends Component {
   render() {
@@ -39,6 +41,14 @@ class App extends Component {
                 <li>
                   <Link to="/to-do">to do</Link>
                 </li>
+
+                <li>
+                  <Link to="/use-state">Use state</Link>
+                </li>
+
+                <li>
+                  <Link to="/hooks">hooks</Link>
+                </li>
               </ul>
             </nav>
 
@@ -65,6 +75,14 @@ class App extends Component {
 
               <Route path="/to-do">
                 <ToDo />
+              </Route>
+
+              <Route path="/use-state">
+                <MyState />
+              </Route>
+
+              <Route path="/hooks">
+                <Hooks />
               </Route>
             </Switch>
           </div>
