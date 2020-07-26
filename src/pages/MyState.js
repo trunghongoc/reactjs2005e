@@ -2,14 +2,15 @@ import React, { useState, useEffect, useMemo, useCallback, useReducer } from 're
 
 const initialState = {count: 0};
 
-function reducer(state, action, myFunc) {
+function reducer(state, action) {
+  console.log('----state-reducer:', state)
   switch (action.type) {
     case 'increment':
       return {count: state.count + 1};
     case 'decrement':
       return {count: state.count - 1};
     default:
-      state;
+      return state
   }
 }
 
@@ -17,44 +18,20 @@ const MyState = () => {
   const [count, setCount] = useState(0)
   const [user, setUser] = useState(false)
 
-
-  const myFunc = params => console.log(params)
-  const [state, dispatch] = useReducer(reducer, initialState, myFunc);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const increment = () => {
     setCount(count + 1)
   }
-
-  // useEffect(() => {
-  //   console.log('---runing')
-
-  //   return () => {
-  //     console.log('---un-mount')
-  //   }
-  // })
-
-  // const testMemo = useMemo(() => {
-  //   console.log('--memo is runing')
-  //   return count + 1
-  // }, [count])
 
   const runUseCallback = useCallback(() => {
     setUser(!user)
     console.log('-----callback is runing')
   }, [count])
 
-  // useEffect(() => {
-  //   console.log('giá trị của memo:', testMemo)
-  // })
-
-  // useEffect(() => {
-  //   console.log('---count--bị thay đổi')
-  // }, [count])
-
   useEffect(() => {
     console.log('--- bị render lại')
   })
-
 
   return (
     <>
@@ -63,7 +40,7 @@ const MyState = () => {
       <button onClick={increment}>INCREMENT</button>
       <button onClick={() => setUser(!user)}>CHANGE USER</button>
       <button onClick={runUseCallback}>RUN CALLBACK</button>
-      <p>Count: {count}</p>
+      <p>Count: {state.count}</p>
 
       <hr/>
 
