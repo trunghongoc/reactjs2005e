@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -11,85 +11,123 @@ import Input from './pages/Input'
 import ToDo from './pages/ToDo'
 import MyState from './pages/MyState'
 import Hooks from './pages/Hooks'
+import MyContext from './pages/MyContext'
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Router>
-          <div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
-                  <Link to="/users">Users</Link>
-                </li>
-
-                <li>
-                  <Link to="/sum/2/6">sum 2 6</Link>
-                </li>
-
-                <li>
-                  <Link to="/input">input</Link>
-                </li>
-
-                <li>
-                  <Link to="/to-do">to do</Link>
-                </li>
-
-                <li>
-                  <Link to="/use-state">Use state</Link>
-                </li>
-
-                <li>
-                  <Link to="/hooks">hooks</Link>
-                </li>
-              </ul>
-            </nav>
-
-            {/* A <Switch> looks through its children <Route>s and
-                renders the first one that matches the current URL. */}
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/about">
-                <About />
-              </Route>
-              <Route path="/users">
-                <Users />
-              </Route>
-
-              <Route path="/sum/:a/:b?">
-                <Sum />
-              </Route>
-
-              <Route path="/input">
-                <Input type="number" />
-              </Route>
-
-              <Route path="/to-do">
-                <ToDo />
-              </Route>
-
-              <Route path="/use-state">
-                <MyState />
-              </Route>
-
-              <Route path="/hooks">
-                <Hooks />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      </div>
-    )
+import MyStoreContext, { initialValue } from './contexts/myDemoContext'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+const initialStore = {
+  count: 0
+}
+const myReducer = (state = initialStore, action) => {
+  switch(action.type) {
+    case 'INCREMENT':
+      return {
+        ...state,
+        count: state.count + 1
+      }
+    case 'DESCREMENT':
+      return {
+        ...state,
+        count: state.count - 1
+      }
+    default:
+      return state
   }
+}
+const store = createStore(myReducer)
+
+
+const App = () => {
+  const [context, setContext] = useState(initialValue)
+
+  return (
+    <div>
+      <Provider store={store}>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/about">About</Link>
+              </li>
+              <li>
+                <Link to="/users">Users</Link>
+              </li>
+
+              <li>
+                <Link to="/sum/2/6">sum 2 6</Link>
+              </li>
+
+              <li>
+                <Link to="/input">input</Link>
+              </li>
+
+              <li>
+                <Link to="/to-do">to do</Link>
+              </li>
+
+              <li>
+                <Link to="/use-state">Use state</Link>
+              </li>
+
+              <li>
+                <Link to="/hooks">hooks</Link>
+              </li>
+
+              <li>
+                <Link to="/context">context</Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* A <Switch> looks through its children <Route>s and
+              renders the first one that matches the current URL. */}
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/users">
+              <Users />
+            </Route>
+
+            <Route path="/sum/:a/:b?">
+              <Sum />
+            </Route>
+
+            <Route path="/input">
+              <Input type="number" />
+            </Route>
+
+            <Route path="/to-do">
+              <ToDo />
+            </Route>
+
+            <Route path="/use-state">
+              <MyState />
+            </Route>
+
+            <Route path="/hooks">
+              <Hooks />
+            </Route>
+
+            <Route path="/context">
+              <MyStoreContext.Provider value={{value: context, setContext}}>
+                <MyContext />
+              </MyStoreContext.Provider>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+      </Provider>
+    </div>
+  )
 }
 
 function Home() {
